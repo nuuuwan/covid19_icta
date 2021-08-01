@@ -1,12 +1,17 @@
 """Uploaded data to nuuuwan/covid19_icta:data branch."""
 
-import os
+
+from covid19_icta import scrape, tweet
 
 
 def upload_data():
-    """Upload data."""
-    os.system('echo "test data" > /tmp/covid19_icta.test.txt')
-    os.system('echo "# covid19_icta" > /tmp/README.md')
+    html, image_file = scrape.scrape()
+    message, center_list = scrape.parse_and_tweet(html, image_file)
+    tweet.tweet_status(
+        message,
+        center_list,
+        image_file,
+    )
 
 
 if __name__ == '__main__':

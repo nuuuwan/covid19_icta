@@ -1,4 +1,3 @@
-import os
 import time
 
 from _utils import log
@@ -6,7 +5,10 @@ from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
-from utils import jsonx, timex
+from utils import filex, jsonx
+from utils.cache import cache
+
+from covid19_icta._constants import CACHE_NAME, CACHE_TIMEOUT
 
 URL = 'https://vaccine.covid19.gov.lk/sign-in'
 HEIGHT = 1440
@@ -25,15 +27,25 @@ def scrape():
     browser.get(URL)
     browser.set_window_size(WIDTH, HEIGHT)
     time.sleep(WEBSITE_LOAD_WAIT_TIME)
+
     image_file = '/tmp/covid19_icta.latest.png'
     browser.save_screenshot(image_file)
-    html = browser.page_source
-    browser.quit()
     log.info('Saved screenshot to %s', image_file)
 
+    html = browser.page_source
+    browser.quit()
+
+    html_file = '/tmp/covid19_icta.latest.html'
+    filex.write(html_file, html)
+    log.info('Saved page course to %s', html_file)
+
+    return html, image_file
+
+
+def parse_and_tweet(html, image_file):
     soup = BeautifulSoup(html, 'html.parser')
     div_message = soup.find('div', class_='jss23')
-    message = div_message.text
+    message = div_message.text.strip()
     log.info('message = %s', message)
 
     tr_list = soup.find_all('tr', class_='MuiTableRow-root')
@@ -51,23 +63,14 @@ def scrape():
             dose=dose,
             age=age,
         )
-        log.info(center)
         center_list.append(center)
-    log.info('Found %d centers', len(center_list))
+
     data = dict(
         message=message,
         center_list=center_list,
     )
     data_file = '/tmp/covid19_icta.latest.json'
     jsonx.write(data_file, data)
+    log.info('Saved data for %d centers to %s', len(center_list), data_file)
 
-    time_id = timex.format_time(timex.get_unixtime(), '%Y-%m-%d-%H%M%S')
-
-    image_file_history = '/tmp/covid19_icta.%s.png' % time_id
-    data_file_history = '/tmp/covid19_icta.%s.json' % time_id
-    os.system('cp %s %s' % (image_file, image_file_history))
-    os.system('cp %s %s' % (data_file, data_file_history))
-
-
-if __name__ == '__main__':
-    scrape()
+    return message, center_list
