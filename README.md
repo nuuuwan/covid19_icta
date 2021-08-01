@@ -12,3 +12,4 @@ pip install covid19_icta-nuuuwan
 ## Release History
 
 ### 1.0.0 (PRE-RELEASE)
+* [2021-08-01 03:45PM] Rename Initial Files

@@ -1,6 +1,5 @@
 '''Setup.'''
 
-import time
 import setuptools
 
 DIST_NAME = 'covid19_icta'
