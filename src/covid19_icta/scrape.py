@@ -11,6 +11,7 @@ from utils import jsonx, timex
 URL = 'https://vaccine.covid19.gov.lk/sign-in'
 HEIGHT = 1440
 WIDTH = HEIGHT * 16 / 9
+WEBSITE_LOAD_WAIT_TIME = 2
 
 
 def _run():
@@ -23,7 +24,7 @@ def scrape():
     browser = webdriver.Firefox(options=options)
     browser.get(URL)
     browser.set_window_size(WIDTH, HEIGHT)
-    time.sleep(2)
+    time.sleep(WEBSITE_LOAD_WAIT_TIME)
     image_file = '/tmp/covid19_icta.latest.png'
     browser.save_screenshot(image_file)
     html = browser.page_source
