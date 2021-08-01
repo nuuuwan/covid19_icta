@@ -1,14 +1,12 @@
 import time
 
-from _utils import log
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from utils import filex, jsonx
-from utils.cache import cache
 
-from covid19_icta._constants import CACHE_NAME, CACHE_TIMEOUT
+from covid19_icta._utils import log
 
 URL = 'https://vaccine.covid19.gov.lk/sign-in'
 HEIGHT = 1440
