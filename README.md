@@ -19,3 +19,4 @@ pip install covid19_icta-nuuuwan
 * [2021-09-05 08:10PM] Add district info
   * Updated README
   * Reshaped image
+  * uncommented
