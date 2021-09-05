@@ -1,7 +1,7 @@
 """Uploaded data to nuuuwan/covid19_icta:data branch."""
 
 
-from covid19_icta import scrape
+from covid19_icta import scrape, tweet
 
 
 def upload_data():

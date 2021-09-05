@@ -20,3 +20,4 @@ pip install covid19_icta-nuuuwan
   * Updated README
   * Reshaped image
   * uncommented
+  * 
