@@ -21,3 +21,4 @@ pip install covid19_icta-nuuuwan
   * Reshaped image
   * uncommented
   * 
+  * Pre-Merge
