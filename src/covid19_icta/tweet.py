@@ -9,6 +9,7 @@ def tweet_status(
     message,
     center_list,
     image_file,
+    table_image_file,
 ):
 
     date_to_center_list = {}
@@ -20,17 +21,10 @@ def tweet_status(
 
     inner_lines = []
     for date, date_center_list in date_to_center_list.items():
-        n_colombo = 0
-        for center in date_center_list:
-            if 'Colombo' in center['center']:
-                n_colombo += 1
-
-        has_colombo = '(%d #Colombo)' % (n_colombo) if n_colombo else ''
         inner_lines.append(
-            '{date}: {n_centers} centers {has_colombo}'.format(
+            '{date}: {n_centers} centers '.format(
                 date=date,
                 n_centers=len(date_center_list),
-                has_colombo=has_colombo,
             )
         )
     inner = '\n'.join(inner_lines)
@@ -55,6 +49,6 @@ Details & Register at https://vaccine.covid19.gov.lk/sign-in
     twtr = twitter.Twitter.from_args()
     twtr.tweet(
         tweet_text=tweet_text,
-        status_image_files=[image_file],
+        status_image_files=[image_file, table_image_file],
         update_user_profile=True,
     )
