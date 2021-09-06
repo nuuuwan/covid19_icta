@@ -22,3 +22,4 @@ pip install covid19_icta-nuuuwan
   * uncommented
   * 
   * Pre-Merge
+  * Basic complete html
