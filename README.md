@@ -23,3 +23,4 @@ pip install covid19_icta-nuuuwan
   * 
   * Pre-Merge
   * Basic complete html
+  * refactored pipeline

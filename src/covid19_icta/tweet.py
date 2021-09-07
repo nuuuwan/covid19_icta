@@ -6,7 +6,6 @@ MAX_TWEET_LEN = 250
 
 
 def tweet_status(
-    message,
     center_list,
     image_file,
     table_image_file,
@@ -46,9 +45,12 @@ Details & Register at https://vaccine.covid19.gov.lk/sign-in
         inner=inner,
     )
 
+    image_files = [image_file]
+    if table_image_file:
+        image_files.append(table_image_file)
     twtr = twitter.Twitter.from_args()
     twtr.tweet(
         tweet_text=tweet_text,
-        status_image_files=[image_file, table_image_file],
+        status_image_files=image_files,
         update_user_profile=True,
     )
