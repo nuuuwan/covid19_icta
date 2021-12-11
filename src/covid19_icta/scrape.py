@@ -1,13 +1,13 @@
-import time
 import math
+import time
+
 from bs4 import BeautifulSoup
 from dateutil.parser import parse
-from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.common.exceptions import JavascriptException
 from PIL import Image
+from selenium import webdriver
+from selenium.common.exceptions import JavascriptException
+from selenium.webdriver.firefox.options import Options
 from utils import filex, jsonx
-
 
 from covid19_icta._utils import log
 
@@ -35,7 +35,8 @@ def scrape():
 
     try:
         browser.execute_script(
-            "document.getElementsByClassName('jss22')[0].style.maxHeight = '100000px';"
+            '''document.getElementsByClassName('jss22')[0].style.maxHeight
+                = '100000px';'''
         )
         time.sleep(WEBSITE_LOAD_WAIT_TIME)
 
@@ -72,14 +73,15 @@ def scrape():
     filex.write(html_file, html)
     log.info('Saved page source to %s', html_file)
 
-
     return html, image_file, table_image_file
 
 
 def parse_center_list(html):
     soup = BeautifulSoup(html, 'html.parser')
     div_message = soup.find('div', class_='jss23')
-    message = div_message.text.strip()
+    message = ''
+    if div_message:
+        message = div_message.text.strip()
     log.info('message = %s', message)
 
     tr_list = soup.find_all('tr', class_='MuiTableRow-root')
